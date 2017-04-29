@@ -109,6 +109,18 @@ public abstract class AppListBaseAct<RQT, ADT, HT extends RecyclerViewHolder,AD 
         }
         recyclerViewHelper.setGridLayoutCount(count);
     }
+    /**
+     * 设置表格布局横向item个数
+     *
+     * @param count
+     */
+    public void setGridLayoutCount(int count,int spacing ) {
+        if (recyclerViewHelper ==null){
+            Toast.show("请先调用initListView方法");
+            return;
+        }
+        recyclerViewHelper.setGridLayoutCount(count,spacing);
+    }
 
     public void setLoadMoreEnable() {
         setLoadMoreEnable(true);

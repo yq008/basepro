@@ -18,6 +18,12 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
+import com.yq008.basepro.applib.R;
+import com.yq008.basepro.applib.bean.DataGuidePic;
+import com.yq008.basepro.applib.db.bean.TBGuide;
+import com.yq008.basepro.applib.db.bean.TBGuidePic;
+import com.yq008.basepro.applib.db.dao.GuideDao;
+import com.yq008.basepro.applib.db.dao.GuidePicDao;
 import com.yq008.basepro.http.Headers;
 import com.yq008.basepro.http.Http;
 import com.yq008.basepro.http.download.DownloadListener;
@@ -30,21 +36,14 @@ import com.yq008.basepro.http.error.TimeoutError;
 import com.yq008.basepro.http.error.URLError;
 import com.yq008.basepro.http.error.UnKnownHostError;
 import com.yq008.basepro.http.extra.HttpHelper;
-import com.yq008.basepro.applib.R;
-import com.yq008.basepro.applib.bean.DataGuidePic;
-import com.yq008.basepro.applib.db.bean.TBGuide;
-import com.yq008.basepro.applib.db.bean.TBGuidePic;
-import com.yq008.basepro.applib.db.dao.GuideDao;
-import com.yq008.basepro.applib.db.dao.GuidePicDao;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
 import com.yq008.basepro.util.AppHelper;
 import com.yq008.basepro.util.log.Log;
 import com.yq008.basepro.util.rxjava.RxUtil;
 import com.yq008.basepro.util.rxjava.bean.RxIOTask;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 /*##################################################
                        _ooOoo_
                       o8888888o
@@ -166,10 +165,10 @@ public class AppDownPicService extends Service {
             } else if (exception instanceof URLError) {
                 messageContent = getString(R.string.download_error_url);
             } else {
-                messageContent = getString(R.string.download_error_un);
+                messageContent = getString(R.string.error_unknow);
             }
             message = String.format(Locale.getDefault(), message, messageContent);
-            Log.i("xxxx what="+what+"  onDownloadError" + message);
+            Log.i("``` what:"+what+";请求出错:" + message);
             downErrorIndex.add(what);
             downIndex++;
             picCount--;

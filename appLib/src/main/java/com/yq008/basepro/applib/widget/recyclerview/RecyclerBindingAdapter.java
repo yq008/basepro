@@ -21,7 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yq008.basepro.applib.R;
-import com.yq008.basepro.util.autolayout.utils.AutoUtils;
 
 import java.util.List;
 
@@ -56,7 +55,6 @@ public abstract class RecyclerBindingAdapter<ADT> extends RecyclerBaseAdapter<AD
             return super.getItemView(layoutResId, parent);
         }
         View view = binding.getRoot();
-        AutoUtils.autoSize(view);
         view.setTag(R.id.RecyclerBaseAdapter_databinding_support, binding);
         return view;
     }

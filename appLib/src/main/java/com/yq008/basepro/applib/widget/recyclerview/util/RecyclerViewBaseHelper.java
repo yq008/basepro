@@ -237,9 +237,10 @@ public class RecyclerViewBaseHelper<ADT, HT extends RecyclerViewHolder, AD exten
                 mSwipeRefreshLayout.setRefreshing(false);
             if (isShowEmptyView)
                 addEmptyView();
-            adapter.getData().clear();
+            adapter.setNewData(newData);
+         //   adapter.getData().clear();
             adapter.notifyDataSetChanged();
-            adapter.removeAllFooterView();
+       //     adapter.removeAllFooterView();
             return;
         }
         if (currentPage == 1) {

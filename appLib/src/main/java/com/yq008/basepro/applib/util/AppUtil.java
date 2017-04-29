@@ -1,3 +1,4 @@
+/*
 package com.yq008.basepro.applib.util;
 
 import android.content.Context;
@@ -18,8 +19,6 @@ import org.json.JSONObject;
 
 import java.util.Map;
 
-/**
- */
 public class AppUtil {
 
     public  static boolean isForceUpdate;
@@ -33,12 +32,14 @@ public class AppUtil {
     public  static  AppUtil getInstance() {
         return AppUtil.MyObjectHandler.singleOne;
     }
-    /**
+    */
+/**
      * 检查更新
      * @param appActivity
      * @param loadingMsg 请求的网络显示的提示消息
      * @param updateListener  返回 null没更新，否者有更新
-     */
+     *//*
+
     public  void checkUpdate(AppActivity appActivity, String loadingMsg, final AppUpdateListener updateListener){
         isForceUpdate=false;
         checkUpdate(appActivity,loadingMsg,appActivity.initParams("activeCount"),updateListener);
@@ -64,11 +65,13 @@ public class AppUtil {
         });
     }
 
-    /**
+    */
+/**
      * 开始App更新
      * @param ctx
      * @param appInfo 更新时候的信息
-     */
+     *//*
+
     public  void  startAppUpdate(Context ctx,AppUpdateInfo appInfo){
         Intent intent = new Intent(ctx,AppUpdateService.class);
         intent.putExtra("appInfo",appInfo);
@@ -76,10 +79,12 @@ public class AppUtil {
     }
 
 
-    /**
+    */
+/**
      * 安装apk
      *
-     */
+     *//*
+
     public   void installApk(Context ctx,String filePath ) {
         if (AppHelper.getInstance().installApk(ctx,filePath)){
             if (isForceUpdate){
@@ -89,18 +94,22 @@ public class AppUtil {
         }
 
     }
-    /**
+    */
+/**
      * 安装统计
      * @param ctx
-     */
+     *//*
+
     public  void installCount(Context ctx){
         AppActivity appActivity=(AppActivity)ctx;
         installCount(ctx,appActivity.initParams("installCount"));
     }
-    /**
+    */
+/**
      * 安装统计
      * @param ctx
-     */
+     *//*
+
     public  void installCount(Context ctx,Map<String, String> params){
         boolean isInstall= SPUtil.getInstance().getBoolean("isAppIntall");
         if (!isInstall){
@@ -122,3 +131,4 @@ public class AppUtil {
 
 
 }
+*/

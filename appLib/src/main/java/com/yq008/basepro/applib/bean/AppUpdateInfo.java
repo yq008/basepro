@@ -1,11 +1,10 @@
+/*
 package com.yq008.basepro.applib.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * @Xaiy
- */
+
 public class AppUpdateInfo implements Parcelable{
     private  String downName,downUrl;
     private int iconRersource;
@@ -70,3 +69,4 @@ public class AppUpdateInfo implements Parcelable{
         }
     };
 }
+*/

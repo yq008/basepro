@@ -12,7 +12,6 @@
     <color name="gray_9">#999999</color>
     <color name="black_3">#333333</color>
     <color name="gray_listLine">#D5D5D5</color>
-    <color name="gray_text">#7D7D7D</color>
 
 
     <color name="image_selector_content_gray">#353535</color>
@@ -21,4 +20,17 @@
     <color name="image_selector_bar_gray_90">#dd393a3e</color>
     <color name="image_selector_green_70">#AD43c117</color>
     <color name="image_selector_divider_color">#dcdcdc</color>
+
+    <!--背景颜色-->
+    <color name="gray_line">#e7e7e7</color>
+    <color name="gray_bg">#F5F5F5</color>
+    <color name="gray_e5">#E5E5E5</color>
+    <color name="gray_f2">#F2F2F2</color>
+
+    <!--字体颜色-->
+    <color name="text_gray9">#999999</color>
+    <color name="text_gray6">#666666</color>
+    <color name="text_black3">#333333</color>
+    <color name="text_hint">#CCCCCC</color>
+    <color name="text_white">#FFFFFF</color>
 </resources>

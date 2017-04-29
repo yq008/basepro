@@ -12,7 +12,9 @@ import com.yq008.basepro.applib.db.dao.GuideDao;
 import com.yq008.basepro.applib.db.dao.GuidePicDao;
 import com.yq008.basepro.applib.listener.HttpCallBack;
 import com.yq008.basepro.applib.service.AppDownPicService;
-import com.yq008.basepro.http.extra.EncryptUtil;
+import com.yq008.basepro.http.extra.EncryptHelper;
+import com.yq008.basepro.http.extra.request.MyJsonObject;
+import com.yq008.basepro.http.extra.request.ParamsString;
 import com.yq008.basepro.util.AppHelper;
 import com.yq008.basepro.util.rxjava.RxUtil;
 import com.yq008.basepro.util.rxjava.bean.RxIOTask;
@@ -21,7 +23,6 @@ import com.yq008.basepro.widget.dialog.DialogClickListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +50,7 @@ public abstract class AppLaunchAct extends AppActivity {
                     return;
                 }
                 setConfigUrl();
-                EncryptUtil.setPassword(getRequestPassword());
+                EncryptHelper.getInstance().setPassword(getRequestPassword());
                 setValue(AppHelper.getInstance().isNetworkConnected());
             }
 
@@ -95,17 +96,17 @@ public abstract class AppLaunchAct extends AppActivity {
     boolean isShowGuideWithApp, isShowGuideWithSDPic;
 
     private void checkGuidePic() {
-        sendJsonObjectPost(initParams("getAppGuide"), new HttpCallBack<JSONObject>() {
+        sendJsonObjectPost(new ParamsString("getAppGuide"), new HttpCallBack<MyJsonObject>() {
             @Override
-            public void onSucceed(int what, final JSONObject responseData) {
+            public void onSucceed(int what, final MyJsonObject responseData) {
                 RxUtil.doInIOThread(new RxIOTask() {
                     @Override
                     public void doInIOThread() {
                         try {
                             GuideDao guideDao=new GuideDao();
                             TBGuide dbGuide = guideDao.queryForFirst();
-                            if (responseData.getInt("status") == 1) {
-                                JSONArray jArr = responseData.getJSONArray("data");
+                            if (responseData.isSuccess()) {
+                                JSONArray jArr = responseData.getJsonDataArray();
                                 if (dbGuide == null) {//如果是第一次启动
                                     dbGuide = new TBGuide();
                                     dbGuide.oldData = jArr.toString();
@@ -141,7 +142,7 @@ public abstract class AppLaunchAct extends AppActivity {
             }
 
             @Override
-            public void onFailed(int what, JSONObject responseData) {
+            public void onFailed(int what, MyJsonObject responseData) {
                 isShowGuide(isShowGuideWithApp, isShowGuideWithSDPic);
             }
         });

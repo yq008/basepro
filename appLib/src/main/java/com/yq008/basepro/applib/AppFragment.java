@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import com.yq008.basepro.util.rxjava.RxManager;
 
-import java.util.Map;
-
 
 public abstract class AppFragment extends Fragment {
     public boolean isLoadData;
@@ -48,12 +46,6 @@ public abstract class AppFragment extends Fragment {
     protected abstract int setPageHeadColor();
     //protected  abstract void   getData();
 
-    /**
-     * 获取参数对象
-     */
-    public Map<String, String> initParams(String method) {
-        return activity.initParams(method);
-    }
 
     /**
      * 替换Fragment

@@ -2,7 +2,6 @@ package com.yq008.basepro.applib.widget.dialog;
 
 import android.content.Context;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,8 +9,7 @@ import android.widget.Toast;
 
 import com.yq008.basepro.applib.AppApplication;
 import com.yq008.basepro.applib.R;
-
-import com.yq008.basepro.util.autolayout.utils.AutoUtils;
+import com.yq008.basepro.util.InflaterHelper;
 
 import static com.yq008.basepro.applib.R.mipmap.toast_error;
 
@@ -23,11 +21,7 @@ public class MyToast {
 
     public static void init(Context ctx) {
         toast = new Toast(ctx);
-        LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.toast_dialog, (ViewGroup) toast.getView(),false);
-        AutoUtils.auto(layout);
-        // ViewUtil.scaleContentView(layout);
-        //ViewGroup layout = (ViewGroup) InflateHelper.getInstance().inflater(LayoutInflater.from(ctx),R.layout.toast_dialog,null);
+        ViewGroup layout = (ViewGroup) InflaterHelper.getInstance().inflate(ctx,R.layout.toast_dialog,null);
         toastImage = (ImageView) layout.findViewById(R.id.iv_toastImage);
         toastText = (TextView) layout.findViewById(R.id.toastText);
         //text.setText("完全自定义Toast完全自定义Toast");

@@ -1,14 +1,13 @@
-package com.yq008.basepro.applib.receiver;
+/*package com.yq008.basepro.applib.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
 import com.yq008.basepro.applib.util.AppUtil;
-
-import com.yq008.basepro.widget.Toast;
 import com.yq008.basepro.util.AppActivityManager;
 import com.yq008.basepro.util.AppHelper;
+import com.yq008.basepro.widget.Toast;
 
 public class AppReceiver extends BroadcastReceiver {
     public static String INSTALL ="install";
@@ -22,4 +21,4 @@ public class AppReceiver extends BroadcastReceiver {
             }
         }
     }
-}
+}*/

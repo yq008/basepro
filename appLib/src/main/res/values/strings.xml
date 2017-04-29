@@ -19,5 +19,7 @@
     <string name="download_error_timeout">下载超时！</string>
     <string name="download_error_un_know_host">找不到服务器。</string>
     <string name="download_error_url">URL地址错误。</string>
-    <string name="download_error_un">未知错误。</string>
+
+    <string name="error_unknow">未知错误。</string>
+    <string name="permission_fail">获取%1$s权限失败。</string>
 </resources>

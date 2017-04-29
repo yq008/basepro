@@ -11,7 +11,8 @@
  * 版   本  号：
  * 修   改  人：
  * 修改内容：
- ************************************************************************************************/
+ ************************************************************************************************//*
+
 package com.yq008.basepro.applib.service;
 
 import android.app.Notification;
@@ -41,15 +42,19 @@ import java.net.URL;
 
 import com.yq008.basepro.util.AppHelper;
 
+*/
 /***
  * 升级服务
  *
  * @author xiay
  *
- */
+ *//*
+
 public class AppUpdateService extends Service {
 
-	/********download progress step*********/
+	*/
+/********download progress step*********//*
+
 	private static final int down_step_custom = 3;
 
 	private static final int TIMEOUT = 10 * 1000;// 超时
@@ -69,12 +74,14 @@ public class AppUpdateService extends Service {
 		return null;
 	}
 
-	/**
+	*/
+/**
 	 * 方法描述：onStartCommand方法
 	 * @param    intent, int flags, int startId
 	 * @return    int
 	 * @see     AppUpdateService
-	 */
+	 *//*
+
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 
@@ -90,7 +97,9 @@ public class AppUpdateService extends Service {
 		}
 		return super.onStartCommand(intent, flags, startId);
 	}
-  /**创建文件是否成功 成功返回true */
+  */
+/**创建文件是否成功 成功返回true *//*
+
 	private boolean  createFile(String appName) {
 		if (android.os.Environment.MEDIA_MOUNTED.equals(android.os.Environment.getExternalStorageState())) {
 			 savePath = new File(  AppHelper.getInstance().getSDPath()+ "/updateApp/");
@@ -104,7 +113,9 @@ public class AppUpdateService extends Service {
 					return true;
 				} catch (IOException e) {
 					Toast.makeText(this,e.getMessage(), Toast.LENGTH_SHORT).show();
-					/***************stop service************/
+					*/
+/***************stop service************//*
+
 					stopSelf();
 					e.printStackTrace();
 					return false;
@@ -118,14 +129,18 @@ public class AppUpdateService extends Service {
 		}
 	}
 
-	/********* update UI******/
+	*/
+/********* update UI******//*
+
 	private final Handler handler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 				case DOWN_OK:
 
-					/*********下载完成，点击安装***********/
+					*/
+/*********下载完成，点击安装***********//*
+
 					String strFilePath=filePath.getAbsolutePath();
 					AppHelper.getInstance().installApk(getApplication(),strFilePath);
 					contentView.setTextViewText(R.id.notificationTitle,"下载完成，点击安装");
@@ -149,7 +164,9 @@ public class AppUpdateService extends Service {
 					notificationManager.notify(R.layout.notification_item, notification);
 					// notification.setLatestEventInfo(AppUpdateService.this,appInfo.getDownName(), appInfo.getDownName() +"下载完成，点击安装", pendingIntent);
 					//stopService(updateIntent);
-					/***stop service*****/
+					*/
+/***stop service*****//*
+
 					stopSelf();
 					break;
 
@@ -164,7 +181,9 @@ public class AppUpdateService extends Service {
 					builder1.setWhen(System.currentTimeMillis());
 					notification = builder1.build();
 					notificationManager.notify(R.layout.notification_item, notification);
-					/***stop service*****/
+					*/
+/***stop service*****//*
+
 					//onDestroy();
 					stopSelf();
 					break;
@@ -175,12 +194,14 @@ public class AppUpdateService extends Service {
 		}
 	};
 
-	/**
+	*/
+/**
 	 * 方法描述：createThread方法, 开线程下载
 	 * @param
 	 * @return
 	 * @see     AppUpdateService
-	 */
+	 *//*
+
 	public void createThread() {
 		new DownLoadThread().start();
 	}
@@ -208,12 +229,14 @@ public class AppUpdateService extends Service {
 
 
 
-	/**
+	*/
+/**
 	 * 方法描述：createNotification方法
 	 * @param
 	 * @return
 	 * @see     AppUpdateService
-	 */
+	 *//*
+
 	public void createNotification() {
 		//notification = new Notification(R.drawable.dot_enable,app_name + getString(R.string.is_downing) ,System.currentTimeMillis());
 //		notification = new Notification(
@@ -223,7 +246,9 @@ public class AppUpdateService extends Service {
 //				System.currentTimeMillis());
 //		notification.flags = Notification.FLAG_ONGOING_EVENT;
 
-		/*** 自定义  Notification 的显示****/
+		*/
+/*** 自定义  Notification 的显示****//*
+
 		contentView = new RemoteViews(getPackageName(),R.layout.notification_item);
 		contentView.setTextViewText(R.id.notificationTitle, appInfo.getDownName() );
 		contentView.setTextViewText(R.id.notificationPercent, "0%");
@@ -241,12 +266,14 @@ public class AppUpdateService extends Service {
 		notificationManager.notify(R.layout.notification_item, notification);
 	}
 
-	/***
+	*/
+/***
 	 * down file
 	 *
 	 * @return
 	 * @throws MalformedURLException
-	 */
+	 *//*
+
 	public long downloadUpdateFile(String down_url, String file)throws Exception {
 		InputStream inputStream = null;
 		OutputStream outputStream = null;
@@ -280,7 +307,9 @@ public class AppUpdateService extends Service {
 
 		  while ((readsize = inputStream.read(buffer)) != -1) {
 
-//			/*********如果下载过程中出现错误，就弹出错误提示，并且把notificationManager取消*********/
+//			*/
+/*********如果下载过程中出现错误，就弹出错误提示，并且把notificationManager取消*********//*
+
 //			if (httpURLConnection.getResponseCode() == 404) {
 //				notificationManager.cancel(R.layout.notification_item);
 //				throw new Exception("fail!");
@@ -290,7 +319,9 @@ public class AppUpdateService extends Service {
 
 			  outputStream.write(buffer, 0, readsize);
 			  downloadCount += readsize;// 时时获取下载到的大小
-			  /*** 每次增张3%**/
+			  */
+/*** 每次增张3%**//*
+
 			  if (updateCount == 0 || (downloadCount * 100 / totalSize - down_step) >= updateCount) {
 				  updateCount += down_step;
 				  // 改变通知栏
@@ -311,4 +342,4 @@ public class AppUpdateService extends Service {
 		return downloadCount;
 	}
 
-}
+}*/

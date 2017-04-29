@@ -10,6 +10,7 @@ import com.yq008.basepro.http.FileBinary;
 import com.yq008.basepro.http.OnUploadListener;
 import com.yq008.basepro.http.rest.Request;
 import com.yq008.basepro.util.ImageUtil;
+import com.yq008.basepro.http.extra.request.ParamsString;
 import com.yq008.basepro.util.rxjava.RxUtil;
 import com.yq008.basepro.util.rxjava.bean.RxIOUITask;
 import com.yq008.basepro.widget.Toast;
@@ -31,10 +32,10 @@ public class UploadUtil {
         void onSuccess(T response);
         void onError(T response);
     }
-    public  <T> void uploadPic(AppActivity activity, Request<T> request, Map<String, String> params, List<Map<String,Object>> formNameList, final UploadListener<T> listener) {
+    public  <T> void uploadPic(AppActivity activity, Request<T> request, ParamsString params, List<Map<String,Object>> formNameList, final UploadListener<T> listener) {
        uploadPic(activity, request,  params, formNameList, 480,800, "",listener);
     }
-    public  <T> void uploadPic(AppActivity activity, Request<T> request, Map<String, String> params, List<Map<String,Object>> formNameList, String progressMsg,final UploadListener<T> listener) {
+    public  <T> void uploadPic(AppActivity activity, Request<T> request, ParamsString params, List<Map<String,Object>> formNameList, String progressMsg,final UploadListener<T> listener) {
        uploadPic(activity, request,  params, formNameList, 480,800,progressMsg, listener);
     }
 
@@ -48,7 +49,7 @@ public class UploadUtil {
      * @param maxHeight 上传图片最大高度
      * @param listener 上传结果监听
      */
-    public  <T> void uploadPic(final AppActivity activity, final Request<T> request, final Map<String, String> params, final List<Map<String,Object>> formNameList, final int maxWidth, final int maxHeight, String progressMsg, final UploadListener<T> listener) {
+    public  <T> void uploadPic(final AppActivity activity, final Request<T> request, final ParamsString params, final List<Map<String,Object>> formNameList, final int maxWidth, final int maxHeight, String progressMsg, final UploadListener<T> listener) {
         progressDialog = new MyProgressDialog(activity,progressMsg);
         progressDialog.showLoading(progressMsg+"准备中…");
         progressDialog.setCancelable(false);

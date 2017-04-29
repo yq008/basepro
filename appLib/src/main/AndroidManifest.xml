@@ -8,7 +8,8 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
-
+    <!-- 录音权限 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <!-- Permission for apkplug -->
@@ -48,18 +49,8 @@
     >
 
         <activity android:name=".imageselector.crop.CropImageActivity" android:theme="@style/CustomTheme"/>
-        <service android:name=".service.AppUpdateService" />
         <service android:name=".service.AppDownPicService" />
         <service android:name=".service.AppInitializeService" />
-
-        <!--广播注册-->
-        <receiver android:name=".receiver.AppReceiver">
-            <intent-filter>
-                <action android:name="install"/>
-            </intent-filter>
-        </receiver>
-
-
 
         <activity
             android:name=".imageselector.view.ImageSelectorActivity"

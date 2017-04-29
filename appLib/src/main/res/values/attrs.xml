@@ -116,4 +116,9 @@
         </attr>
     </declare-styleable>
     <!--                 AutoLayout  End               -->
+
+
+    <declare-styleable name="LoadingLayout">
+        <attr name="isFirstVisible" format="boolean"/>
+    </declare-styleable>
 </resources>
