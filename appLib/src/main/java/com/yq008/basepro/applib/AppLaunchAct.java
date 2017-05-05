@@ -68,12 +68,6 @@ public abstract class AppLaunchAct extends AppActivity {
                 } else {
                     if (isUseUrlGuidePic){
                         checkGuidePic();
-//                        getRxManager().add(Observable.just(0).delay(2500, TimeUnit.MICROSECONDS).subscribe(new Consumer<Integer>() {
-//                            @Override
-//                            public void accept(Integer integer) throws Exception {
-//                                checkGuidePic();
-//                            }
-//                        }));
                     }else {
                         GuideDao guideDao=new GuideDao();
                         TBGuide dbGuide = guideDao.queryForFirst();
@@ -94,9 +88,8 @@ public abstract class AppLaunchAct extends AppActivity {
     protected abstract String getRequestPassword();
 
     boolean isShowGuideWithApp, isShowGuideWithSDPic;
-
-    private void checkGuidePic() {
-        sendJsonObjectPost(new ParamsString("getAppGuide"), new HttpCallBack<MyJsonObject>() {
+    public void checkGuidePic() {
+        sendJsonObjectPost(getAppGuideParams(), new HttpCallBack<MyJsonObject>() {
             @Override
             public void onSucceed(int what, final MyJsonObject responseData) {
                 RxUtil.doInIOThread(new RxIOTask() {
@@ -146,6 +139,10 @@ public abstract class AppLaunchAct extends AppActivity {
                 isShowGuide(isShowGuideWithApp, isShowGuideWithSDPic);
             }
         });
+    }
+    /**可由子类覆写此方法*/
+    public ParamsString getAppGuideParams() {
+        return  new ParamsString("getAppGuide");
     }
 
     /**

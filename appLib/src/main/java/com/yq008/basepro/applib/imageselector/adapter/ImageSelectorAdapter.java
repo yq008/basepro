@@ -1,8 +1,8 @@
 package com.yq008.basepro.applib.imageselector.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +12,14 @@ import android.widget.ImageView;
 import com.bumptech.glide.DrawableTypeRequest;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
+import com.yq008.basepro.applib.AppActivity;
 import com.yq008.basepro.applib.R;
 import com.yq008.basepro.applib.imageselector.ImageSelectorConfig;
 import com.yq008.basepro.applib.imageselector.model.LocalMedia;
 import com.yq008.basepro.applib.imageselector.view.ImagePreviewDeleteActivity;
 import com.yq008.basepro.applib.imageselector.view.ImageSelectorActivity;
+import com.yq008.basepro.applib.util.permission.PermissionCallback;
+import com.yq008.basepro.applib.util.permission.PermissionSDAndCamera;
 import com.yq008.basepro.applib.widget.dialog.MyDialog;
 import com.yq008.basepro.http.extra.ConfigUrl;
 import com.yq008.basepro.util.AppHelper;
@@ -37,7 +40,7 @@ public class ImageSelectorAdapter extends RecyclerView.Adapter<ImageSelectorAdap
     private int maxPicCount;
     LocalMedia addIcon;
     public ArrayList<LocalMedia> images = new ArrayList<>();
-    Context ctx;
+    AppActivity act;
     int requestCode;
     boolean enableCrop;
     public int REQUEST_PREVIEW_DELETE;
@@ -53,14 +56,14 @@ public class ImageSelectorAdapter extends RecyclerView.Adapter<ImageSelectorAdap
     public String[] formNames;
 
     /**
-     * @param ctx         Context
+     * @param act         Context
      * @param maxPicCount 显示的最多数量
      * @param addIcon     添加图标
      * @param requestCode 请求码，不能传0哦
      * @param enableCrop  是否开启裁剪功能（默认true）
      */
-    public ImageSelectorAdapter(Context ctx, int requestCode, int maxPicCount, LocalMedia addIcon, boolean enableCrop) {
-        this.ctx = ctx;
+    public ImageSelectorAdapter(AppActivity act, int requestCode, int maxPicCount, LocalMedia addIcon, boolean enableCrop) {
+        this.act = act;
         this.addIcon = addIcon;
         images.add(addIcon);
         this.maxPicCount = maxPicCount;
@@ -77,21 +80,21 @@ public class ImageSelectorAdapter extends RecyclerView.Adapter<ImageSelectorAdap
     }
 
     /**
-     * @param ctx         Context
+     * @param act         Context
      * @param maxPicCount 显示的最多数量
      * @param addIcon     添加图标
      * @param enableCrop  是否开启裁剪功能（默认true）
      */
-    public ImageSelectorAdapter(Context ctx, int maxPicCount, LocalMedia addIcon, boolean enableCrop) {
-        this(ctx, ImageSelectorActivity.REQUEST_IMAGE, maxPicCount, addIcon, enableCrop);
+    public ImageSelectorAdapter(AppActivity act, int maxPicCount, LocalMedia addIcon, boolean enableCrop) {
+        this(act, ImageSelectorActivity.REQUEST_IMAGE, maxPicCount, addIcon, enableCrop);
     }
 
-    public ImageSelectorAdapter(Context ctx, int maxPicCount, LocalMedia addIcon) {
-        this(ctx, ImageSelectorActivity.REQUEST_IMAGE, maxPicCount, addIcon, true);
+    public ImageSelectorAdapter(AppActivity act, int maxPicCount, LocalMedia addIcon) {
+        this(act, ImageSelectorActivity.REQUEST_IMAGE, maxPicCount, addIcon, true);
     }
 
-    public ImageSelectorAdapter(Context ctx, int maxPicCount) {
-        this(ctx, maxPicCount, null);
+    public ImageSelectorAdapter(AppActivity act, int maxPicCount) {
+        this(act, maxPicCount, null);
     }
 
     @Override
@@ -112,7 +115,7 @@ public class ImageSelectorAdapter extends RecyclerView.Adapter<ImageSelectorAdap
     public void onBindViewHolder(ImageSelectorAdapter.ViewHolder holder, final int position) {
         if (images.size() <= maxPicCount) {
             holder.imageView.setVisibility(View.VISIBLE);
-            RequestManager manager = Glide.with(ctx);
+            RequestManager manager = Glide.with(act);
             final DrawableTypeRequest request;
             if (images.get(position) != addIcon) {
                 if (images.get(position).getPath().startsWith(ImageSelectorConfig.serverPathStartWith)) {
@@ -130,13 +133,19 @@ public class ImageSelectorAdapter extends RecyclerView.Adapter<ImageSelectorAdap
                 public void onClick(View v) {
                     //  mOnItemClickListener.onItemClick(v, position);
                     if (images.get(position).equals(addIcon)) {
-                        int mode;
+                        final int mode;
                         if (maxPicCount == 1 || enableCrop == true) {
                             mode = ImageSelectorActivity.MODE_SINGLE;
                         } else {
                             mode = ImageSelectorActivity.MODE_MULTIPLE;
                         }
-                        ImageSelectorActivity.start((Activity) ctx, REQUEST_ADD, maxPicCount - images.size() + 1, mode, true, false, enableCrop);
+                        new PermissionSDAndCamera(act, new PermissionCallback(act) {
+                            @Override
+                            public void onSucceed(int requestCode, @NonNull List<String> grantPermissions) {
+                                ImageSelectorActivity.start(act, REQUEST_ADD, maxPicCount - images.size() + 1, mode, true, false, enableCrop);
+                            }
+                        });
+
                     } else {
                         startPreview(images, position);
                     }
@@ -164,15 +173,15 @@ public class ImageSelectorAdapter extends RecyclerView.Adapter<ImageSelectorAdap
 
     public void startPreview(List<LocalMedia> previewImages, int position) {
         if (addIcon == null) {
-            ImagePreviewDeleteActivity.startPreview((Activity) ctx, images, images, maxPicCount, position, true);
+            ImagePreviewDeleteActivity.startPreview((Activity) act, images, images, maxPicCount, position, true);
         } else {
             if (images.contains(addIcon)) {//if has addIcon, remove it
                 List<LocalMedia> images = new ArrayList<>();
                 images.addAll(previewImages);
                 images.remove(addIcon);
-                ImagePreviewDeleteActivity.startPreview((Activity) ctx, REQUEST_PREVIEW_DELETE, images, images, maxPicCount, position, false);
+                ImagePreviewDeleteActivity.startPreview((Activity) act, REQUEST_PREVIEW_DELETE, images, images, maxPicCount, position, false);
             } else {
-                ImagePreviewDeleteActivity.startPreview((Activity) ctx, REQUEST_PREVIEW_DELETE, previewImages, images, maxPicCount, position, false);
+                ImagePreviewDeleteActivity.startPreview((Activity) act, REQUEST_PREVIEW_DELETE, previewImages, images, maxPicCount, position, false);
             }
         }
     }
@@ -222,7 +231,7 @@ public class ImageSelectorAdapter extends RecyclerView.Adapter<ImageSelectorAdap
     public void onAddImage(Intent data) {
         ArrayList<String> picPaths = data.getStringArrayListExtra(ImageSelectorActivity.REQUEST_OUTPUT);
         if (picPaths == null) {
-            new MyDialog(ctx).showCancle("获取图片出错,请选择其它图片");
+            new MyDialog(act).showCancle("获取图片出错,请选择其它图片");
             return;
         }
         for (String picPath : picPaths) {

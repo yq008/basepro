@@ -9,8 +9,8 @@
         android:id="@+id/left_layout"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:visibility="gone"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <ImageView
@@ -21,22 +21,27 @@
             android:src="@mipmap/arrow_back" />
 
     </LinearLayout>
-<FrameLayout
-    android:id="@+id/fl_customLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_toRightOf="@+id/left_layout"
-    android:layout_toLeftOf="@+id/right_layout"
-    android:visibility="gone"
-    >
+    <FrameLayout
+        android:id="@+id/fl_customLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@+id/left_layout"
+        android:layout_toLeftOf="@+id/right_layout"
+        android:visibility="gone"
+        >
 
-</FrameLayout>
+    </FrameLayout>
     <TextView
         android:id="@+id/title"
-        android:layout_width="wrap_content"
+        android:layout_toRightOf="@+id/left_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
         android:textColor="@color/white"
+        android:gravity="center"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_marginRight="90px"
         android:textSize="58px" />
 
     <LinearLayout
@@ -63,7 +68,7 @@
             android:paddingLeft="20px"
             android:gravity="center"
             android:visibility="gone"
-             />
+            />
     </LinearLayout>
 
 </RelativeLayout>

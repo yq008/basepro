@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">AppLib</string>
     <string name="crop__done">完成</string>
     <string name="crop__cancel">取消</string>
     <string name="crop__saving">保存图片</string>

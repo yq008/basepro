@@ -8,7 +8,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout.LayoutParams;
 
-import com.yq008.basepro.applib.AppActivity;
 
 /**
  * 基本web类

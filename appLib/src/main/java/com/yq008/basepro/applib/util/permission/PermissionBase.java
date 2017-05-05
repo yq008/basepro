@@ -4,10 +4,10 @@ import android.app.Activity;
 import android.support.v4.app.Fragment;
 
 import com.yanzhenjie.permission.AndPermission;
-import com.yanzhenjie.permission.Permission;
+import com.yanzhenjie.permission.PermissionListener;
 import com.yanzhenjie.permission.Rationale;
 import com.yanzhenjie.permission.RationaleListener;
-import com.yq008.basepro.applib.AppActivity;
+import com.yanzhenjie.permission.RationaleRequest;
 import com.yq008.basepro.applib.R;
 import com.yq008.basepro.widget.Toast;
 
@@ -19,28 +19,25 @@ public abstract class PermissionBase {
 
     public Activity act;
     public Fragment fragment;
-    RationaleListener listener;
+    PermissionListener permissionListener;
     int requestCode;
-    public PermissionBase(Activity act) {
+    public PermissionBase(Activity act,PermissionListener permissionListener) {
         this.act = act;
+        this.permissionListener = permissionListener;
         requestPermission(getPermissCode(),getPermissions());
     }
 
-    public PermissionBase(Fragment fragment) {
+    public PermissionBase(Fragment fragment,PermissionListener permissionListener) {
         this.fragment = fragment;
+        this.permissionListener = permissionListener;
         requestPermission(getPermissCode(),getPermissions());
-    }
-
-
-    public void setListener(RationaleListener listener) {
-        this.listener = listener;
     }
 
     /**
      * 申请SD卡权限，单个的。
      */
     public void requestPermission(int requestCode, String... permissions) {
-        Permission permission;
+        RationaleRequest permission;
         this.requestCode = requestCode;
         if (act != null) {
             permission = AndPermission.with(act);
@@ -50,7 +47,8 @@ public abstract class PermissionBase {
         permission.requestCode(requestCode)
                 .permission(permissions)
                 .rationale(rationaleListener)
-                .send();
+                .callback(permissionListener)
+                .start();
     }
 
     //
@@ -82,7 +80,7 @@ public abstract class PermissionBase {
 //        }
 //
 //    }
-    public static void showNoPermissionDialog(final AppActivity act, int requestCode, List<String> deniedPermissions) {
+    public static void showNoPermissionDialog(final Activity act, int requestCode, List<String> deniedPermissions) {
         switch (requestCode) {
             case PermissionSD.PERMISSION_CODE: {
                 Toast.show(String.format(Locale.CHINA, act.getString(R.string.permission_fail), "SD卡"));

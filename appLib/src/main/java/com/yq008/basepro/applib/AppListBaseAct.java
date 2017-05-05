@@ -19,7 +19,7 @@ import com.yq008.basepro.widget.Toast;
 import java.util.List;
 
 /***
- * @param <RQT>请求数据类型
+ * @param <RQT>请求数据返回的类型
  * @param <ADT>       Adapter 数据类型
  * @param <HT>       Adapter ViewHolder类型
  * @param <AD>Adapter 类型
